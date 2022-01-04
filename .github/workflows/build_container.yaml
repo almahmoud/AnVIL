@@ -15,6 +15,8 @@ jobs:
           image-tag: ${{ steps.repo.outputs.name }}
           base-image: "bioconductor/bioconductor_docker"
           base-tag: "latest"
+          build-command: |
+            Rscript -e "BiocManager::install(remotes::local_package_deps(dependencies=TRUE))" && Rscript -e "BiocManager::install('AnVIL')"
       - name: Login to DockerHub
         uses: actions-hub/docker/login@master
         env:
